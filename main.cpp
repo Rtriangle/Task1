@@ -11,7 +11,7 @@
 std::vector <int> V;
 
 template <class T>
-void Insertion_Sort_Copy_Backward(T Iter_begin, T Iter_end)
+void Insertion_Sort_Copy_For(T Iter_begin, T Iter_end)
 {
 	T Iter_move;
 	if(Iter_begin != Iter_end)
@@ -34,8 +34,8 @@ void Insertion_Sort_Copy_Backward(T Iter_begin, T Iter_end)
 		Tmp = *(Iter_move);
 		if(Iter_value != Iter_move)
 		{
-
-			std::copy_backward(Iter_value, Iter_move, Iter_value+1);
+			for(T ittmp = Iter_value; ittmp >= Iter_move; ittmp--)
+				std::iter_swap(ittmp,(ittmp+1));
 			*(Iter_value) = Tmp;
 		}
 		Iter_move++;
@@ -55,7 +55,7 @@ int main()
 	std::cout << "\n";
 	auto it1 = V.begin();
 	auto it2 = V.end();
-	Insertion_Sort_Copy_Backward(it1,it2);
+	Insertion_Sort_Copy_For(it1,it2);
 	for(auto it = V.begin(); it != V.end(); it++)
 		std::cout << *it << " ";
 	system("pause");

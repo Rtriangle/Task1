@@ -23,7 +23,8 @@ void Insertion_Sort_Copy_For(T Iter_begin, T Iter_end)
 		Tmp = *(Iter_move);
 		if(Iter_value != Iter_move)
 		{
-			std::copy(Iter_value, Iter_move, Iter_value+1);
+			for(T ittmp = Iter_value; ittmp >= Iter_move; ittmp--)
+				std::iter_swap(ittmp,(ittmp+1));
 			*(Iter_value) = Tmp;
 		}
 		Iter_move++;
