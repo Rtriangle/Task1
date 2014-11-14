@@ -1,3 +1,4 @@
+/*
 template <class T>
 void Heap_Sort(T Iter_begin, T Iter_end)
 {
@@ -6,3 +7,4 @@ void Heap_Sort(T Iter_begin, T Iter_end)
 	for(int i = 0; i < Iter_end-Iter_begin; i++)
 		std::pop_heap(Iter_begin, Itmoveend--);
 }
+*/

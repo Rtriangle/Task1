@@ -1,12 +1,12 @@
 /*
-template <class T>
-void Insertion_Sort_Copy_For(T Iter_begin, T Iter_end)
+template <class Iterator>
+void Insertion_Sort_Copy_For(Iterator Iter_begin, Iterator Iter_end)
 {
-	T Iter_move;
+	Iterator Iter_move;
 	if(Iter_begin != Iter_end)
 		Iter_move = Iter_begin + 1;
-	T Iter_value;
-	T Iter_fix;
+	Iterator Iter_value;
+	Iterator Iter_fix;
 	bool Doit = true;
 	auto Tmp = *(Iter_begin);
 	while(Iter_move != Iter_end)

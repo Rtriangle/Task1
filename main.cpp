@@ -8,33 +8,54 @@
 #include <iterator>
 #include <array>
 
+std::random_device rd;
+std::mt19937 gen(rd());
+std::uniform_int_distribution<> dist(1,50);
+
 std::vector <int> V;
 
-template <class T>
-void Heap_Sort(T Iter_begin, T Iter_end)
+template <class Iterator>
+void Quick_Sort(Iterator Iter_begin, Iterator Iter_end)
 {
-	std::make_heap(Iter_begin,Iter_end);
-	auto Itmoveend = Iter_end;
-	for(int i = 0; i < Iter_end-Iter_begin; i++)
-		std::pop_heap(Iter_begin, Itmoveend--);
+	std::uniform_int_distribution<> dist(0,size_t(Iter_end-Iter_begin)-1);
+	auto PartElement = *(Iter_begin + dist(gen));
+	Iterator Left = Iter_begin;
+	Iterator Right = Iter_end-1;
+	while(Left < Right)
+	{
+		while(*Left < PartElement)
+			Left++;
+		while(PartElement < *Right)
+			Right--;
+		if((Left < Right) || !((Left < Right) || (Right < Left)))
+		{
+			std::iter_swap(Left,Right);
+			Left++;
+			Right--;
+		}
+	}
+	if(Left < Iter_end-1)
+		Quick_Sort(Left, Iter_end);
+	if(Iter_begin < Right)
+		Quick_Sort(Iter_begin, Right+1);
 }
 
 int main()
 {
-	std::random_device rd;
-	std::mt19937 gen(rd());
-	std::uniform_int_distribution<> dist(1,50);
-	for(int i = 0; i < 8; i++)
-		V.push_back(dist(gen));
+	V.push_back(2);
+	V.push_back(5);
+	V.push_back(1);
+	V.push_back(3);
+	V.push_back(4);
 	for(auto it = V.begin(); it != V.end(); it++)
 		std::cout << *it << " ";
 	std::cout << "\n";
 	auto it1 = V.begin();
 	auto it2 = V.end();
-	std::make_heap(V.begin(),V.end());
-	Heap_Sort(it1,it2);
+	Quick_Sort(it1,it2);
 	for(auto it = V.begin(); it != V.end(); it++)
 		std::cout << *it << " ";
+	std::cout << '\n' << it1 - it2 << '\n';
 	system("pause");
 	return 0;
 }
