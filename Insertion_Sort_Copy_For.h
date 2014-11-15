@@ -1,4 +1,3 @@
-/*
 template <class Iterator>
 void Insertion_Sort_Copy_For(Iterator Iter_begin, Iterator Iter_end)
 {
@@ -30,4 +29,3 @@ void Insertion_Sort_Copy_For(Iterator Iter_begin, Iterator Iter_end)
 		Iter_move++;
 	}
 }
-*/

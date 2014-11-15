@@ -1,4 +1,3 @@
-/*
 template <typename Iterator> 
 void Selection_Sort(Iterator Iter_begin, Iterator Iter_end)
 {
@@ -19,4 +18,3 @@ void Selection_Sort(Iterator Iter_begin, Iterator Iter_end)
 		it++;
 	}
 }
-*/
