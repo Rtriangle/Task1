@@ -7,6 +7,8 @@
 #include <random>
 #include <iterator>
 #include <array>
+#include <ctime>
+#include <typeinfo>
 
 std::random_device rd;
 std::mt19937 gen(rd());
@@ -15,29 +17,69 @@ std::uniform_int_distribution<> dist(1,50);
 std::vector <int> V;
 
 template <class Iterator>
-void Quick_Sort(Iterator Iter_begin, Iterator Iter_end)
+void MergeSort(Iterator Iter_begin, Iterator Iter_end)
 {
-	std::uniform_int_distribution<> dist(0,size_t(Iter_end-Iter_begin)-1);
-	auto PartElement = *(Iter_begin + dist(gen));
-	Iterator Left = Iter_begin;
-	Iterator Right = Iter_end-1;
-	while(Left < Right)
+	std::vector <typename std::iterator_traits<Iterator>::value_type> buffer(Iter_end - Iter_begin);
+	Iterator BuffBegin = buffer.begin();
+	Iterator ReallyEnd = Iter_end-1;
+	Merge(Iter_begin, ReallyEnd, BuffBegin);
+}
+
+template <class Iterator> 
+void Merge(Iterator Iter_begin, Iterator Iter_end, Iterator buffer)
+{
+	if((Iter_end - Iter_begin) == 0)
+		return;
+	if((Iter_end - Iter_begin) == 1)
 	{
-		while(*Left < PartElement)
-			Left++;
-		while(PartElement < *Right)
-			Right--;
-		if((Left < Right) || !((Left < Right) || (Right < Left)))
-		{
-			std::iter_swap(Left,Right);
-			Left++;
-			Right--;
-		}
+		if(*Iter_end < *Iter_begin)
+			std::iter_swap(Iter_begin,Iter_end);
+		return;
 	}
-	if(Left < Iter_end-1)
-		Quick_Sort(Left, Iter_end);
-	if(Iter_begin < Right)
-		Quick_Sort(Iter_begin, Right+1);
+	Iterator IterMiddle = Iter_begin + (Iter_end - Iter_begin)/2;
+	Iterator IterMiddle1 = IterMiddle + 1;
+	Merge(Iter_begin, IterMiddle, buffer);
+	Merge(IterMiddle1, Iter_end, buffer);
+	MergeSubarrays(Iter_begin, IterMiddle, IterMiddle1, Iter_end, buffer);
+	std::copy(buffer,buffer+(Iter_end-Iter_begin)+1,Iter_begin);
+}
+
+template <class Iterator>
+void MergeSubarrays(Iterator Left1, Iterator Right1, Iterator Left2, Iterator Right2, Iterator buffer)
+{
+	Iterator IterFirstPart = Left1;
+	Iterator IterSecondPart = Left2;
+	while((IterFirstPart <= Right1) || (IterSecondPart <= Right2))
+	{
+		if(Right1 < IterFirstPart)
+			while(IterSecondPart <= Right2)
+			{
+				*buffer = *IterSecondPart;
+				++buffer;
+				++IterSecondPart;
+			}
+		else
+			if(Right2 < IterSecondPart)
+				while(IterFirstPart <= Right1)
+				{
+					*buffer = *IterFirstPart;
+					++buffer;
+					++IterFirstPart;
+				}
+			else
+				if(*(IterFirstPart) < *(IterSecondPart))
+				{
+					*buffer = *(IterFirstPart);
+					++buffer;
+					++IterFirstPart;
+				}
+				else
+				{
+					*buffer = *(IterSecondPart);
+					++buffer;
+					++IterSecondPart;
+				}
+	}
 }
 
 int main()
@@ -52,10 +94,9 @@ int main()
 	std::cout << "\n";
 	auto it1 = V.begin();
 	auto it2 = V.end();
-	Quick_Sort(it1,it2);
+	MergeSort(it1,it2);
 	for(auto it = V.begin(); it != V.end(); it++)
 		std::cout << *it << " ";
-	std::cout << '\n' << it1 - it2 << '\n';
 	system("pause");
 	return 0;
 }

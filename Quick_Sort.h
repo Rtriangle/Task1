@@ -1,3 +1,4 @@
+//Add Insertion Sort, when < 25
 template <class Iterator>
 void Quick_Sort(Iterator Iter_begin, Iterator Iter_end)
 {
