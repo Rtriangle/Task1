@@ -9,6 +9,9 @@
 #include <array>
 #include <ctime>
 #include <typeinfo>
+#include <algorithm>
+#include "gtest/gtest.h"
+#include "Selection_Sort.h"
 
 std::random_device rd;
 std::mt19937 gen(rd());
@@ -16,20 +19,27 @@ std::uniform_int_distribution<> dist(1,50);
 
 std::vector <int> V;
 
-int main()
+
+
+TEST(TestCase, Test1) 
 {
-	V.push_back(2);
-	V.push_back(5);
-	V.push_back(1);
-	V.push_back(3);
-	V.push_back(4);
-	for(auto it = V.begin(); it != V.end(); it++)
-		std::cout << *it << " ";
-	std::cout << "\n";
-	auto it1 = V.begin();
-	auto it2 = V.end();
-	for(auto it = V.begin(); it != V.end(); it++)
-		std::cout << *it << " ";
-	system("pause");
-	return 0;
+	for(int i = 0; i < 10; i++)
+		V.push_back(dist(gen));
+	std::vector <int> V1;
+	std::vector <int> V2;
+	V1 = V;
+	V2 = V;
+	sort(V1.begin(),V1.end());
+	Selection_Sort(V2.begin(),V2.end());
+	EXPECT_EQ(V1, V2);
+	EXPECT_TRUE(2 + 2 == 4);
+}
+
+template <typename Iterator, typename Comparator = std::less<typename std::iterator_traits<Iterator>::value_type>>
+
+int main(int argc,char** argv)
+{
+	::testing::InitGoogleTest(&argc,argv);
+    RUN_ALL_TESTS();
+	std::getchar();
 }
