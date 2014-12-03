@@ -1,12 +1,12 @@
 template <typename FSourceIterator, typename SSourceIterator,
-typename TargetIterator >
+typename TargetIterator, typename Comparator>
  
 TargetIterator Merge(FSourceIterator first_begin, FSourceIterator first_end,
                      SSourceIterator second_begin, SSourceIterator second_end,
-                     TargetIterator target) {
+                     TargetIterator target, Comparator comparator) {
     while (first_begin != first_end &&
            second_begin != second_end) {
-        if(*first_begin <= *second_begin) {
+        if(comparator(*first_begin, *second_begin)) {
             *target = *first_begin;
             ++target;
             ++first_begin;
@@ -22,9 +22,20 @@ TargetIterator Merge(FSourceIterator first_begin, FSourceIterator first_end,
     return target;
 }
  
+
+template <typename FSourceIterator, typename SSourceIterator, typename TargetIterator>
+TargetIterator Merge(FSourceIterator first_begin, FSourceIterator first_end,
+                     SSourceIterator second_begin, SSourceIterator second_end,
+                     TargetIterator target)
+{
+	std::less<typename std::iterator_traits<Iterator>::value_type> cmp;
+	TargetIterator Merge(FSourceIterator first_begin, FSourceIterator first_end,
+						 SSourceIterator second_begin, SSourceIterator second_end,
+						 TargetIterator target, cmp);
+}
  
-template <typename Iterator ,typename OutputIterator>
- 
+template <typename Iterator, typename OutputIterator>
+
 void MergeSubarrays(Iterator begin, Iterator end, OutputIterator target, ptrdiff_t chunk_size) {
         for(Iterator first_begin = begin;
             first_begin < end;

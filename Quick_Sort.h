@@ -1,5 +1,5 @@
-template <class Iterator>
-void Quick_Sort(Iterator Iter_begin, Iterator Iter_end)
+template <typename Iterator, typename Comparator>
+void Quick_Sort(Iterator Iter_begin, Iterator Iter_end, Comparator = comparator)
 {
 	if((Iter_begin - Iter_end) < 25)
 		Insertion_Sort(Iter_begin,Iter_end);
@@ -11,7 +11,7 @@ void Quick_Sort(Iterator Iter_begin, Iterator Iter_end)
 		Iterator Right = Iter_end-1;
 		while(Left < Right)
 		{
-			while(*Left < PartElement)
+			while(comparator(*Left,PartElement))
 				Left++;
 			while(PartElement < *Right)
 				Right--;
@@ -27,4 +27,11 @@ void Quick_Sort(Iterator Iter_begin, Iterator Iter_end)
 		if(Iter_begin < Right)
 			Quick_Sort(Iter_begin, Right+1);
 	}
+}
+
+template <typename Iterator>
+void Quick_Sort(Iterator Iter_begin, Iterator Iter_end)
+{
+	std::less<typename std::iterator_traits<Iterator>::value_type> cmp;
+	Quick_Sort(Iter_begin, Iter_end, cmp);
 }

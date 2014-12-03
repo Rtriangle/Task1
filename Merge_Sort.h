@@ -1,4 +1,4 @@
-template <class Iterator>
+template <typename Iterator, typename Comparator>
 void MergeSort(Iterator Iter_begin, Iterator Iter_end)
 {
 	std::vector <typename std::iterator_traits<Iterator>::value_type> buffer(Iter_end - Iter_begin);
@@ -7,14 +7,14 @@ void MergeSort(Iterator Iter_begin, Iterator Iter_end)
 	Merge(Iter_begin, ReallyEnd, BuffBegin);
 }
 
-template <class Iterator> 
-void Merge(Iterator Iter_begin, Iterator Iter_end, Iterator buffer)
+template <class Iterator, typename Comparator> 
+void Merge(Iterator Iter_begin, Iterator Iter_end, Iterator buffer, Comparator = comparator)
 {
 	if((Iter_end - Iter_begin) == 0)
 		return;
 	if((Iter_end - Iter_begin) == 1)
 	{
-		if(*Iter_end < *Iter_begin)
+		if(comparator(*Iter_end, *Iter_begin))
 			std::iter_swap(Iter_begin,Iter_end);
 		return;
 	}
@@ -26,8 +26,15 @@ void Merge(Iterator Iter_begin, Iterator Iter_end, Iterator buffer)
 	std::copy(buffer,buffer+(Iter_end-Iter_begin)+1,Iter_begin);
 }
 
-template <class Iterator>
-void MergeSubarrays(Iterator Left1, Iterator Right1, Iterator Left2, Iterator Right2, Iterator buffer)
+template <class Iterator> 
+void Merge(Iterator Iter_begin, Iterator Iter_end, Iterator buffer)
+{
+	std::less<typename std::iterator_traits<Iterator>::value_type> cmp;
+	void Merge(Iterator Iter_begin, Iterator Iter_end, Iterator buffer, cmp)
+}
+
+template <typename Iterator, typename Comparator>
+void MergeSubarrays(Iterator Left1, Iterator Right1, Iterator Left2, Iterator Right2, Iterator buffer, Comparator comparator)
 {
 	Iterator IterFirstPart = Left1;
 	Iterator IterSecondPart = Left2;
@@ -49,7 +56,7 @@ void MergeSubarrays(Iterator Left1, Iterator Right1, Iterator Left2, Iterator Ri
 					++IterFirstPart;
 				}
 			else
-				if(*(IterFirstPart) < *(IterSecondPart))
+				if(comparator(*(IterFirstPart), *(IterSecondPart)))
 				{
 					*buffer = *(IterFirstPart);
 					++buffer;
@@ -62,4 +69,11 @@ void MergeSubarrays(Iterator Left1, Iterator Right1, Iterator Left2, Iterator Ri
 					++IterSecondPart;
 				}
 	}
+}
+
+template <class Iterator> 
+void MergeSubarrays(Iterator Left1, Iterator Right1, Iterator Left2, Iterator Right2, Iterator buffer)
+{
+	std::less<typename std::iterator_traits<Iterator>::value_type> cmp;
+	void MergeSubarrays(Iterator Left1, Iterator Right1, Iterator Left2, Iterator Right2, Iterator buffer, cmp);
 }
