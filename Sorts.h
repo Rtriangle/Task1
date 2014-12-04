@@ -1,131 +1,6 @@
-template<typename Iterator,
-         typename Comparator=std::less<typename
-             std::iterator_traits<Iterator>::value_type>>
-void Sort(Iterator begin,
-          Iterator end,
-          Comparator comparator = Comparator());
-
-template <typename Iterator> 
-void Selection_Sort(Iterator Iter_begin, Iterator Iter_end)
-{
-	Iterator it = Iter_begin;
-	Iterator it_move = it;
-	Iterator it_min = it;
-	for(int i = 1; i < (Iter_end-Iter_begin); i++)
-	{
-		it_move = it;
-		it_min = it;
-		while(it_move != Iter_end)
-		{
-			if(*it_move < *it_min)
-				it_min = it_move;
-			it_move++;
-		}
-		iter_swap(it,it_min);
-		it++;
-	}
-}
-
-
-template <class Iterator>
-void Insertion_Sort_Copy_For(Iterator Iter_begin, Iterator Iter_end)
-{
-	Iterator Iter_move;
-	if(Iter_begin != Iter_end)
-		Iter_move = Iter_begin + 1;
-	Iterator Iter_value;
-	Iterator Iter_fix;
-	bool Doit = true;
-	auto Tmp = *(Iter_begin);
-	while(Iter_move != Iter_end)
-	{
-		Iter_value = Iter_move;
-		Doit = true;
-		while(Iter_value > Iter_begin && Doit)
-		{
-			if(!(*Iter_move < *(Iter_value-1)))
-				Doit = false;
-			else
-				Iter_value--;
-		}
-		Tmp = *(Iter_move);
-		if(Iter_value != Iter_move)
-		{
-			for(T ittmp = Iter_value; ittmp >= Iter_move; ittmp--)
-				std::iter_swap(ittmp,(ittmp+1));
-			*(Iter_value) = Tmp;
-		}
-		Iter_move++;
-	}
-}
-
-
-template <class Iterator>
-void Insertion_Sort_Copy_Backward(Iterator Iter_begin, Iterator Iter_end)
-{
-	Iterator Iter_move;
-	if(Iter_begin != Iter_end)
-		Iter_move = Iter_begin + 1;
-	Iterator Iter_value;
-	Iterator Iter_fix;
-	bool Doit = true;
-	auto Tmp = *(Iter_begin);
-	while(Iter_move != Iter_end)
-	{
-		Iter_value = Iter_move;
-		Doit = true;
-		while(Iter_value > Iter_begin && Doit)
-		{
-			if(!(*Iter_move < *(Iter_value-1)))
-				Doit = false;
-			else
-				Iter_value--;
-		}
-		Tmp = *(Iter_move);
-		if(Iter_value != Iter_move)
-		{
-			std::copy_backward(Iter_value, Iter_move, Iter_value+1);
-			*(Iter_value) = Tmp;
-		}
-		Iter_move++;
-	}
-}
-
-
-template <class Iterator>
-void Insertion_Sort_Copy(Iterator Iter_begin, Iterator Iter_end)
-{
-	Iterator Iter_move;
-	if(Iter_begin != Iter_end)
-		Iter_move = Iter_begin + 1;
-	Iterator Iter_value;
-	Iterator Iter_fix;
-	bool Doit = true;
-	auto Tmp = *(Iter_begin);
-	while(Iter_move != Iter_end)
-	{
-		Iter_value = Iter_move;
-		Doit = true;
-		while(Iter_value > Iter_begin && Doit)
-		{
-			if(!(*Iter_move < *(Iter_value-1)))
-				Doit = false;
-			else
-				Iter_value--;
-		}
-		Tmp = *(Iter_move);
-		if(Iter_value != Iter_move)
-		{
-			std::copy(Iter_value, Iter_move, Iter_value+1);
-			*(Iter_value) = Tmp;
-		}
-		Iter_move++;
-	}
-}
-
-
-template <class T>
-void Heap_Sort(T Iter_begin, T Iter_end)
+// Heap Sort
+template <typename Iterator, typename Comparator>
+void Heap_Sort(Iterator Iter_begin, Iterator Iter_end, Comparator comparator)
 {
 	std::make_heap(Iter_begin,Iter_end);
 	auto Itmoveend = Iter_end;
@@ -133,109 +8,110 @@ void Heap_Sort(T Iter_begin, T Iter_end)
 		std::pop_heap(Iter_begin, Itmoveend--);
 }
 
-
-
-template <class Iterator>
-void Quick_Sort(Iterator Iter_begin, Iterator Iter_end)
+template <typename Iterator>
+void Heap_Sort(Iterator Iter_begin, Iterator Iter_end)
 {
-	if((Iter_begin - Iter_end) < 25)
-		Insertion_Sort(Iter_begin,Iter_end);
-	else
+	std::less<typename std::iterator_traits<Iterator>::value_type> cmp;
+	Heap_Sort(Iterator Iter_begin, Iterator Iter_end, cmp);
+}
+
+
+//Insertion Sort with std::copy_backward
+template <typename Iterator, typename Comparator>
+void Insertion_Sort_Copy_Backward(Iterator Iter_begin, Iterator Iter_end, Comparator comparator)
+{
+	Iterator Iter_move;
+	if(Iter_begin != Iter_end)
+		Iter_move = Iter_begin + 1;
+	Iterator Iter_value;
+	bool Doit = true;
+	auto Tmp = *(Iter_begin);
+	while(Iter_move != Iter_end)
 	{
-		std::uniform_int_distribution<> dist(0,size_t(Iter_end-Iter_begin)-1);
-		auto PartElement = *(Iter_begin + dist(gen));
-		Iterator Left = Iter_begin;
-		Iterator Right = Iter_end-1;
-		while(Left < Right)
+		Iter_value = Iter_move;
+		Doit = true;
+		while(Iter_value > Iter_begin && Doit)
 		{
-			while(*Left < PartElement)
-				Left++;
-			while(PartElement < *Right)
-				Right--;
-			if((Left < Right) || !((Left < Right) || (Right < Left)))
-			{
-				std::iter_swap(Left,Right);
-				Left++;
-				Right--;
-			}
+			if(!comparator(*Iter_move,*(Iter_value-1)))
+				Doit = false;
+			else
+				Iter_value--;
 		}
-		if(Left < Iter_end-1)
-			Quick_Sort(Left, Iter_end);
-		if(Iter_begin < Right)
-			Quick_Sort(Iter_begin, Right+1);
+		Tmp = *(Iter_move);
+		if(Iter_value != Iter_move)
+		{
+			std::copy_backward(Iter_value, Iter_move, Iter_move+1);
+			*(Iter_value) = Tmp;
+		}
+		Iter_move++;
 	}
 }
 
-
-
-template <typename FSourceIterator, typename SSourceIterator,
-typename TargetIterator >
-TargetIterator Merge(FSourceIterator first_begin, FSourceIterator first_end,
-                     SSourceIterator second_begin, SSourceIterator second_end,
-                     TargetIterator target) {
-    while (first_begin != first_end &&
-           second_begin != second_end) {
-        if(*first_begin <= *second_begin) {
-            *target = *first_begin;
-            ++target;
-            ++first_begin;
-        }
-        else {
-            *target = *second_begin;
-            ++target;
-            ++second_begin;
-        }
-    }
-    target = std::copy(first_begin, first_end, target);
-    target = std::copy(second_begin, second_end, target);
-    return target;
-}
- 
- 
-template <typename Iterator ,typename OutputIterator>
-void MergeSubarrays(Iterator begin, Iterator end, OutputIterator target, ptrdiff_t chunk_size) {
-        for(Iterator first_begin = begin;
-            first_begin < end;
-            first_begin += std::min<size_t>(2 * chunk_size, end - first_begin)) {
-            Iterator second_begin = first_begin + std::min<size_t>(chunk_size, end - first_begin);
-            Iterator second_end = second_begin + std::min<size_t>(chunk_size, end - second_begin);
-            target = Merge(first_begin, second_begin, second_begin, second_end, target);
-        }
-    }
- 
 template <typename Iterator>
-void MergeSort(Iterator begin, Iterator end) {
-    std::vector<typename std::iterator_traits<Iterator>::value_type> buffer(end - begin);
-    ptrdiff_t chunk_size = 1;
-    while (chunk_size < end - begin) {
-        MergeSubarrays(begin, end, buffer.begin(), chunk_size);
-        chunk_size *= 2;
-        if(chunk_size < end - begin)
-            MergeSubarrays(buffer.begin(), buffer.end(), begin, chunk_size);
-        else
-            std::copy(buffer.begin(), buffer.end(), begin);
-        chunk_size *= 2;
-    }
+void Insertion_Sort_Copy_Backward(Iterator Iter_begin, Iterator Iter_end)
+{
+	std::less<typename std::iterator_traits<Iterator>::value_type> cmp;
+	Insertion_Sort_Copy_Backward(Iter_begin, Iter_end, cmp);
 }
 
 
-template <class Iterator>
+//Insertion Sort with For
+template <typename Iterator, typename Comparator>
+void Insertion_Sort_Copy_For(Iterator Iter_begin, Iterator Iter_end, Comparator comparator)
+{
+	Iterator Iter_move;
+	if(Iter_begin != Iter_end)
+		Iter_move = Iter_begin + 1;
+	Iterator Iter_value;
+	Iterator Iter_fix;
+	bool Doit = true;
+	auto Tmp = *(Iter_begin);
+	while(Iter_move != Iter_end)
+	{
+		Iter_value = Iter_move;
+		Doit = true;
+		while(Iter_value > Iter_begin && Doit)
+		{
+			if(!comparator(*Iter_move, *(Iter_value-1)))
+				Doit = false;
+			else
+				Iter_value--;
+		}
+		Tmp = *(Iter_move);
+		if(Iter_value != Iter_move)
+		{
+			for(Iterator ittmp = Iter_move; ittmp > Iter_value; ittmp--)
+				std::iter_swap(ittmp,(ittmp-1));
+			*(Iter_value) = Tmp;
+		}
+		Iter_move++;
+	}
+}
+
+template <typename Iterator>
+void Insertion_Sort_Copy_For(Iterator Iter_begin, Iterator Iter_end)
+{
+	std::less<typename std::iterator_traits<Iterator>::value_type> cmp;
+	Insertion_Sort_Copy_For(Iter_begin, Iter_end, cmp);
+}
+
+
+//Merge Sort
+template <typename Iterator, typename Comparator>
 void MergeSort(Iterator Iter_begin, Iterator Iter_end)
 {
 	std::vector <typename std::iterator_traits<Iterator>::value_type> buffer(Iter_end - Iter_begin);
-	Iterator BuffBegin = buffer.begin();
-	Iterator ReallyEnd = Iter_end-1;
 	Merge(Iter_begin, ReallyEnd, BuffBegin);
 }
 
-template <class Iterator> 
-void Merge(Iterator Iter_begin, Iterator Iter_end, Iterator buffer)
+template <class Iterator, typename Comparator> 
+void Merge(Iterator Iter_begin, Iterator Iter_end, Iterator buffer, Comparator = comparator)
 {
 	if((Iter_end - Iter_begin) == 0)
 		return;
 	if((Iter_end - Iter_begin) == 1)
 	{
-		if(*Iter_end < *Iter_begin)
+		if(comparator(*Iter_end, *Iter_begin))
 			std::iter_swap(Iter_begin,Iter_end);
 		return;
 	}
@@ -247,8 +123,15 @@ void Merge(Iterator Iter_begin, Iterator Iter_end, Iterator buffer)
 	std::copy(buffer,buffer+(Iter_end-Iter_begin)+1,Iter_begin);
 }
 
-template <class Iterator>
-void MergeSubarrays(Iterator Left1, Iterator Right1, Iterator Left2, Iterator Right2, Iterator buffer)
+template <class Iterator> 
+void Merge(Iterator Iter_begin, Iterator Iter_end, Iterator buffer)
+{
+	std::less<typename std::iterator_traits<Iterator>::value_type> cmp;
+	void Merge(Iterator Iter_begin, Iterator Iter_end, Iterator buffer, cmp)
+}
+
+template <typename Iterator, typename Comparator>
+void MergeSubarrays(Iterator Left1, Iterator Right1, Iterator Left2, Iterator Right2, Iterator buffer, Comparator comparator)
 {
 	Iterator IterFirstPart = Left1;
 	Iterator IterSecondPart = Left2;
@@ -270,7 +153,7 @@ void MergeSubarrays(Iterator Left1, Iterator Right1, Iterator Left2, Iterator Ri
 					++IterFirstPart;
 				}
 			else
-				if(*(IterFirstPart) < *(IterSecondPart))
+				if(comparator(*(IterFirstPart), *(IterSecondPart)))
 				{
 					*buffer = *(IterFirstPart);
 					++buffer;
@@ -283,4 +166,147 @@ void MergeSubarrays(Iterator Left1, Iterator Right1, Iterator Left2, Iterator Ri
 					++IterSecondPart;
 				}
 	}
+}
+
+template <class Iterator> 
+void MergeSubarrays(Iterator Left1, Iterator Right1, Iterator Left2, Iterator Right2, Iterator buffer)
+{
+	std::less<typename std::iterator_traits<Iterator>::value_type> cmp;
+	void MergeSubarrays(Iterator Left1, Iterator Right1, Iterator Left2, Iterator Right2, Iterator buffer, cmp);
+}
+
+
+//Merge Sort Iteration
+template <typename FSourceIterator, typename SSourceIterator,
+typename TargetIterator, typename Comparator>
+ 
+TargetIterator Merge(FSourceIterator first_begin, FSourceIterator first_end,
+                     SSourceIterator second_begin, SSourceIterator second_end,
+                     TargetIterator target, Comparator comparator) 
+{
+    while (first_begin != first_end &&
+           second_begin != second_end) {
+        if(comparator(*first_begin, *second_begin)) {
+            *target = *first_begin;
+            ++target;
+            ++first_begin;
+        }
+        else {
+            *target = *second_begin;
+            ++target;
+            ++second_begin;
+        }
+    }
+    target = std::copy(first_begin, first_end, target);
+    target = std::copy(second_begin, second_end, target);
+    return target;
+}
+ 
+template <typename Iterator, typename OutputIterator, typename Comparator>
+
+void MergeSubarrays(Iterator begin, Iterator end, OutputIterator target, ptrdiff_t chunk_size, Comparator comparator) 
+{
+        for(Iterator first_begin = begin;
+            first_begin < end;
+            first_begin += std::min<size_t>(2 * chunk_size, end - first_begin)) 
+		{
+            Iterator second_begin = first_begin + std::min<size_t>(chunk_size, end - first_begin);
+            Iterator second_end = second_begin + std::min<size_t>(chunk_size, end - second_begin);
+            target = Merge(first_begin, second_begin, second_begin, second_end, target, comparator);
+        }
+}
+ 
+template <typename Iterator, typename Comparator>
+ 
+void MergeSort(Iterator begin, Iterator end, Comparator comparator) 
+{
+    std::vector<typename std::iterator_traits<Iterator>::value_type> buffer(end - begin);
+    ptrdiff_t chunk_size = 1;
+    while (chunk_size < end - begin) 
+	{
+        MergeSubarrays(begin, end, buffer.begin(), chunk_size, comparator);
+        chunk_size *= 2;
+        if(chunk_size < end - begin)
+            MergeSubarrays(buffer.begin(), buffer.end(), begin, chunk_size, comparator);
+        else
+            std::copy(buffer.begin(), buffer.end(), begin);
+        chunk_size *= 2;
+    }
+}
+
+template <typename Iterator>
+void MergeSort(Iterator begin, Iterator end)
+{
+	std::less<typename std::iterator_traits<Iterator>::value_type> cmp;
+	MergeSort(begin, end, cmp);
+}
+
+
+//Quick Sort
+template <typename Iterator, typename Comparator>
+void Quick_Sort(Iterator Iter_begin, Iterator Iter_end, Comparator comparator)
+{
+	if((Iter_begin - Iter_end) < 25)
+		Insertion_Sort_Copy_Backward(Iter_begin, Iter_end, comparator);
+	else
+	{
+		std::uniform_int_distribution<> dist(0, size_t(Iter_end - Iter_begin) - 1);
+		typename std::iterator_traits<Iterator>::value_type PartElement = *(Iter_begin + dist(gen));
+		Iterator Left = Iter_begin;
+		Iterator Right = Iter_end-1;
+		while(Left < Right)
+		{
+			while(comparator(*Left, PartElement))
+				Left++;
+			while(comparator(PartElement, *Right))
+				Right--;
+			if(Left <= Right)
+			{
+				std::iter_swap(Left,Right);
+				Left++;
+				Right--;
+			}
+		}
+		if(Left < Iter_end-1)
+			Quick_Sort(Left, Iter_end, comparator);
+		if(Iter_begin < Right)
+			Quick_Sort(Iter_begin, Right+1, comparator);
+	}
+}
+
+template <typename Iterator>
+void Quick_Sort(Iterator Iter_begin, Iterator Iter_end)
+{
+	std::less<typename std::iterator_traits<Iterator>::value_type> cmp;
+	Quick_Sort(Iter_begin, Iter_end, cmp);
+}
+
+
+//Selection Sort
+template<typename Iterator, typename Comparator>
+void Selection_Sort(Iterator Iter_begin, Iterator Iter_end, Comparator comparator)
+{
+	Iterator it = Iter_begin;
+	Iterator it_move = it;
+	Iterator it_min = it;
+	for(int i = 1; i < (Iter_end-Iter_begin); i++)
+	{
+		it_move = it;
+		it_min = it;
+		while(it_move != Iter_end)
+		{
+			if(comparator(*it_move,*it_min))
+				it_min = it_move;
+			it_move++;
+		}
+		iter_swap(it,it_min);
+		it++;
+	}
+}
+
+template<typename Iterator>
+void Selection_Sort(Iterator Iter_begin, Iterator Iter_end)
+{
+	std::less<typename std::iterator_traits<Iterator>::value_type> cmp;
+	void Selection_Sort(Iterator Iter_begin, Iterator Iter_end, cmp)
 }

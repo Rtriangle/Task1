@@ -8,38 +8,42 @@
 #include <iterator>
 #include <array>
 #include <ctime>
+#include <deque>
 #include <typeinfo>
 #include <algorithm>
+#include "i-sort.h"
 #include "gtest/gtest.h"
-#include "Selection_Sort.h"
+#include "Sorts.h"
 
 std::random_device rd;
 std::mt19937 gen(rd());
-std::uniform_int_distribution<> dist(1,50);
+std::uniform_int_distribution<> dist(1,256);
 
-std::vector <int> V;
-
-
-
-TEST(TestCase, Test1) 
+struct X
 {
-	for(int i = 0; i < 10; i++)
-		V.push_back(dist(gen));
-	std::vector <int> V1;
-	std::vector <int> V2;
-	V1 = V;
-	V2 = V;
-	sort(V1.begin(),V1.end());
-	Selection_Sort(V2.begin(),V2.end());
-	EXPECT_EQ(V1, V2);
-	EXPECT_TRUE(2 + 2 == 4);
-}
+	std::string key;
+	int value;
+};
 
-template <typename Iterator, typename Comparator = std::less<typename std::iterator_traits<Iterator>::value_type>>
+struct comparator
+{
+	bool operator()(const X &a, const X &b) const
+	{
+		return a.key < b.key;
+	}
+};
+
+std::vector <X> VX;
+std::vector <int> V;
+std::deque <int> D1;
+std::deque <X> DX;
 
 int main(int argc,char** argv)
 {
+	std::ios_base::sync_with_stdio(false);
 	::testing::InitGoogleTest(&argc,argv);
+	
     RUN_ALL_TESTS();
+	system("pause");
 	std::getchar();
 }

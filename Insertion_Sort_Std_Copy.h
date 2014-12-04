@@ -1,4 +1,4 @@
-template <class Iterator, typename Comparator>
+template <typename Iterator, typename Comparator>
 void Insertion_Sort_Std_Copy(Iterator Iter_begin, Iterator Iter_end, Comparator comparator)
 {
 	Iterator Iter_move;
@@ -14,7 +14,7 @@ void Insertion_Sort_Std_Copy(Iterator Iter_begin, Iterator Iter_end, Comparator 
 		Doit = true;
 		while(Iter_value > Iter_begin && Doit)
 		{
-			if(!(*Iter_move < *(Iter_value-1)))
+			if(!comparator(*Iter_move,*(Iter_value-1)))
 				Doit = false;
 			else
 				Iter_value--;
@@ -33,5 +33,5 @@ template <typename Iterator>
 void Insertion_Sort_Std_Copy(Iterator Iter_begin, Iterator Iter_end)
 {
 	std::less<typename std::iterator_traits<Iterator>::value_type> cmp;
-	Insertion_Sort_Std_Copy(Iterator Iter_begin, cmp);
+	Insertion_Sort_Std_Copy(Iter_begin, Iter_end, cmp);
 }

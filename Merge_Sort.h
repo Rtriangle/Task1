@@ -2,8 +2,6 @@ template <typename Iterator, typename Comparator>
 void MergeSort(Iterator Iter_begin, Iterator Iter_end)
 {
 	std::vector <typename std::iterator_traits<Iterator>::value_type> buffer(Iter_end - Iter_begin);
-	Iterator BuffBegin = buffer.begin();
-	Iterator ReallyEnd = Iter_end-1;
 	Merge(Iter_begin, ReallyEnd, BuffBegin);
 }
 

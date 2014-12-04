@@ -1,21 +1,21 @@
 template <typename Iterator, typename Comparator>
-void Quick_Sort(Iterator Iter_begin, Iterator Iter_end, Comparator = comparator)
+void Quick_Sort(Iterator Iter_begin, Iterator Iter_end, Comparator comparator)
 {
 	if((Iter_begin - Iter_end) < 25)
-		Insertion_Sort(Iter_begin,Iter_end);
+		Insertion_Sort_Copy_Backward(Iter_begin, Iter_end, comparator);
 	else
 	{
-		std::uniform_int_distribution<> dist(0,size_t(Iter_end-Iter_begin)-1);
-		auto PartElement = *(Iter_begin + dist(gen));
+		std::uniform_int_distribution<> dist(0, size_t(Iter_end - Iter_begin) - 1);
+		typename std::iterator_traits<Iterator>::value_type PartElement = *(Iter_begin + dist(gen));
 		Iterator Left = Iter_begin;
 		Iterator Right = Iter_end-1;
 		while(Left < Right)
 		{
-			while(comparator(*Left,PartElement))
+			while(comparator(*Left, PartElement))
 				Left++;
-			while(PartElement < *Right)
+			while(comparator(PartElement, *Right))
 				Right--;
-			if((Left < Right) || !((Left < Right) || (Right < Left)))
+			if(Left <= Right)
 			{
 				std::iter_swap(Left,Right);
 				Left++;
@@ -23,9 +23,9 @@ void Quick_Sort(Iterator Iter_begin, Iterator Iter_end, Comparator = comparator)
 			}
 		}
 		if(Left < Iter_end-1)
-			Quick_Sort(Left, Iter_end);
+			Quick_Sort(Left, Iter_end, comparator);
 		if(Iter_begin < Right)
-			Quick_Sort(Iter_begin, Right+1);
+			Quick_Sort(Iter_begin, Right+1, comparator);
 	}
 }
 
