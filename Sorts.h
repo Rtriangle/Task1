@@ -12,7 +12,7 @@ template <typename Iterator>
 void Heap_Sort(Iterator Iter_begin, Iterator Iter_end)
 {
 	std::less<typename std::iterator_traits<Iterator>::value_type> cmp;
-	Heap_Sort(Iterator Iter_begin, Iterator Iter_end, cmp);
+	Heap_Sort(Iter_begin, Iter_end, cmp);
 }
 
 

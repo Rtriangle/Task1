@@ -7,13 +7,15 @@
 #include <random>
 #include <iterator>
 #include <array>
+#include <chrono>
 #include <ctime>
 #include <deque>
 #include <typeinfo>
 #include <algorithm>
-#include "i-sort.h"
-#include "gtest/gtest.h"
+#include "CheckSort.h"
 #include "Sorts.h"
+#include "Tests.h"
+#pragma warning(disable : 4996)
 
 std::random_device rd;
 std::mt19937 gen(rd());
@@ -38,12 +40,10 @@ std::vector <int> V;
 std::deque <int> D1;
 std::deque <X> DX;
 
-int main(int argc,char** argv)
+int main()
 {
 	std::ios_base::sync_with_stdio(false);
-	::testing::InitGoogleTest(&argc,argv);
-	
-    RUN_ALL_TESTS();
-	system("pause");
-	std::getchar();
+	freopen("output.txt","w",stdout);
+	RunAllTests(comparator());
+//	std::getchar();
 }
