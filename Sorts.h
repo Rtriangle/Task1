@@ -94,7 +94,7 @@ void Insertion_Sort_Copy_For(Iterator Iter_begin, Iterator Iter_end)
 	Insertion_Sort_Copy_For(Iter_begin, Iter_end, cmp);
 }
 
-
+/*
 //Merge Sort
 template <typename Iterator, typename Comparator>
 void MergeSubarrays(Iterator Left1, Iterator Right1, Iterator Left2, Iterator Right2, Iterator buffer, Comparator comparator)
@@ -175,6 +175,7 @@ void  Merge_Sort_Recurse(Iterator Iter_begin, Iterator Iter_end)
 	std::less<typename std::iterator_traits<Iterator>::value_type> cmp;
 	Merge_Sort_Recurse(Iter_begin, Iter_end, cmp);
 }
+*/
 
 //Merge Sort Iteration
 template <typename FSourceIterator, typename SSourceIterator,

@@ -36,7 +36,7 @@ void RunAllTests(Comparator comparator)
 //  0,1,2,3 Elements
 	std::cout << "Vector <int>\n\n";
 	std::cout << std::setw(10) << "n" << std::setw(18) << "InsertionFor" << std::setw(18) << "InsertionCopy" << std::setw(18) << "Selection" 
-			  << std::setw(18) << "Merge" << std::setw(18) << "MergeIteration" << std::setw(18) << "Quick" << std::setw(18) << "Heap";
+			  << std::setw(18) << "MergeIteration" << std::setw(18) << "Quick" << std::setw(18) << "Heap";
 {
 	std::vector<int> VectorOrigin; 
 	std::vector<int> VectorSort;
@@ -46,7 +46,7 @@ void RunAllTests(Comparator comparator)
 	auto TestInsCpyFor = [](std::vector<int> &v){Insertion_Sort_Copy_For(v.begin(), v.end());};
 	auto TestInsCpyBack = [](std::vector<int> &v){Insertion_Sort_Copy_Backward(v.begin(), v.end());};
 	auto TestHeap = [](std::vector<int> &v){Heap_Sort(v.begin(), v.end());};
-	auto TestMerge = [](std::vector<int> &v){Merge_Sort_Recurse(v.begin(), v.end());};
+
 	auto TestMergeIter = [](std::vector<int> &v){Merge_Sort(v.begin(), v.end());};
 	auto TestQuick = [](std::vector<int> &v){Quick_Sort(v.begin(), v.end());};
 	auto TestSelect = [](std::vector<int> &v){Selection_Sort(v.begin(), v.end());};
@@ -86,13 +86,6 @@ void RunAllTests(Comparator comparator)
 			std::cout << std::setw(18) << SortTime;
 		else
 			std::cout << std::setw(18) << "Incorrect";
-		VectorSort = VectorOrigin;
-		VectorCheck = VectorOrigin;
-		RunTest<decltype (TestMerge), decltype (VectorSort.begin())> (TestMerge, VectorSort, VectorCheck, SortTime, CorrectSort);
-		if(CorrectSort)
-			std::cout << std::setw(18) << SortTime;
-		else
-			std::cout << std::setw(18) << "Incorrect"; 
 		VectorSort = VectorOrigin;
 		VectorCheck = VectorOrigin;
 		RunTest<decltype (TestMergeIter), decltype (VectorSort.begin())> (TestMergeIter, VectorSort, VectorCheck, SortTime, CorrectSort);
@@ -163,13 +156,6 @@ void RunAllTests(Comparator comparator)
 			std::cout << std::setw(18) << "Incorrect"; 
 		VectorSort = VectorOrigin;
 		VectorCheck = VectorOrigin;
-		RunTest<decltype (TestMerge), decltype (VectorSort.begin())> (TestMerge, VectorSort, VectorCheck, SortTime, CorrectSort);
-		if(CorrectSort)
-			std::cout << std::setw(18) << SortTime;
-		else
-			std::cout << std::setw(18) << "Incorrect"; 
-		VectorSort = VectorOrigin;
-		VectorCheck = VectorOrigin;
 		RunTest<decltype (TestMergeIter), decltype (VectorSort.begin())> (TestMergeIter, VectorSort, VectorCheck, SortTime, CorrectSort);
 		if(CorrectSort)
 			std::cout << std::setw(18) << SortTime;
@@ -191,7 +177,7 @@ void RunAllTests(Comparator comparator)
 //  0,1,2,3 Elements
 	std::cout << "\n\nVector <double>\n\n";
 	std::cout << std::setw(10) << "n" << std::setw(18) << "InsertionFor" << std::setw(18) << "InsertionCopy" << std::setw(18) << "Selection" 
-			  << std::setw(18) << "Merge" << std::setw(18) << "MergeIteration" << std::setw(18) << "Quick" << std::setw(18) << "Heap";
+			  << std::setw(18) << "MergeIteration" << std::setw(18) << "Quick" << std::setw(18) << "Heap";
 {
 	std::vector<double> VectorOrigin; 
 	std::vector<double> VectorSort;
@@ -201,7 +187,6 @@ void RunAllTests(Comparator comparator)
 	auto TestInsCpyFor = [](std::vector<double> &v){Insertion_Sort_Copy_For(v.begin(), v.end());};
 	auto TestInsCpyBack = [](std::vector<double> &v){Insertion_Sort_Copy_Backward(v.begin(), v.end());};
 	auto TestHeap = [](std::vector<double> &v){Heap_Sort(v.begin(), v.end());};
-	auto TestMerge = [](std::vector<double> &v){Merge_Sort_Recurse(v.begin(), v.end());};
 	auto TestMergeIter = [](std::vector<double> &v){Merge_Sort(v.begin(), v.end());};
 	auto TestQuick = [](std::vector<double> &v){Quick_Sort(v.begin(), v.end());};
 	auto TestSelect = [](std::vector<double> &v){Selection_Sort(v.begin(), v.end());};
@@ -237,13 +222,6 @@ void RunAllTests(Comparator comparator)
 		VectorSort = VectorOrigin;
 		VectorCheck = VectorOrigin;
 		RunTest<decltype (TestHeap), decltype (VectorSort.begin())> (TestHeap, VectorSort, VectorCheck, SortTime, CorrectSort);
-		if(CorrectSort)
-			std::cout << std::setw(18) << SortTime;
-		else
-			std::cout << std::setw(18) << "Incorrect"; 
-		VectorSort = VectorOrigin;
-		VectorCheck = VectorOrigin;
-		RunTest<decltype (TestMerge), decltype (VectorSort.begin())> (TestMerge, VectorSort, VectorCheck, SortTime, CorrectSort);
 		if(CorrectSort)
 			std::cout << std::setw(18) << SortTime;
 		else
@@ -321,13 +299,6 @@ void RunAllTests(Comparator comparator)
 			std::cout << std::setw(18) << "Incorrect"; 
 		VectorSort = VectorOrigin;
 		VectorCheck = VectorOrigin;
-		RunTest<decltype (TestMerge), decltype (VectorSort.begin())> (TestMerge, VectorSort, VectorCheck, SortTime, CorrectSort);
-		if(CorrectSort)
-			std::cout << std::setw(18) << SortTime;
-		else
-			std::cout << std::setw(18) << "Incorrect";
-		VectorSort = VectorOrigin;
-		VectorCheck = VectorOrigin;
 		RunTest<decltype (TestMergeIter), decltype (VectorSort.begin())> (TestMergeIter, VectorSort, VectorCheck, SortTime, CorrectSort);
 		if(CorrectSort)
 			std::cout << std::setw(18) << SortTime;
@@ -347,7 +318,7 @@ void RunAllTests(Comparator comparator)
 //  0,1,2,3 Elements
 	std::cout << "\n\nDeque <int>\n\n";
 	std::cout << std::setw(10) << "n" << std::setw(18) << "InsertionFor" << std::setw(18) << "InsertionCopy" << std::setw(18) << "Selection" 
-			  << std::setw(18) << "Merge" << std::setw(18) << "MergeIteration" << std::setw(18) << "Quick" << std::setw(18) << "Heap";
+			  << std::setw(18) << "MergeIteration" << std::setw(18) << "Quick" << std::setw(18) << "Heap";
 {
 	std::deque<int> DequeOrigin; 
 	std::deque<int> DequeSort;
@@ -357,7 +328,6 @@ void RunAllTests(Comparator comparator)
 	auto TestInsCpyFor = [](std::deque<int> &v){Insertion_Sort_Copy_For(v.begin(), v.end());};
 	auto TestInsCpyBack = [](std::deque<int> &v){Insertion_Sort_Copy_Backward(v.begin(), v.end());};
 	auto TestHeap = [](std::deque<int> &v){Heap_Sort(v.begin(), v.end());};
-	auto TestMerge = [](std::deque<int> &v){Merge_Sort_Recurse(v.begin(), v.end());};
 	auto TestMergeIter = [](std::deque<int> &v){Merge_Sort(v.begin(), v.end());};
 	auto TestQuick = [](std::deque<int> &v){Quick_Sort(v.begin(), v.end());};
 	auto TestSelect = [](std::deque<int> &v){Selection_Sort(v.begin(), v.end());};
@@ -390,13 +360,6 @@ void RunAllTests(Comparator comparator)
 		DequeSort = DequeOrigin;
 		DequeCheck = DequeOrigin;
 		RunTest<decltype (TestHeap), decltype (DequeSort.begin())> (TestHeap, DequeSort, DequeCheck, SortTime, CorrectSort);
-		if(CorrectSort)
-			std::cout << std::setw(18) << SortTime;
-		else
-			std::cout << std::setw(18) << "Incorrect"; 
-		DequeSort = DequeOrigin;
-		DequeCheck = DequeOrigin;
-		RunTest<decltype (TestMerge), decltype (DequeSort.begin())> (TestMerge, DequeSort, DequeCheck, SortTime, CorrectSort);
 		if(CorrectSort)
 			std::cout << std::setw(18) << SortTime;
 		else
@@ -469,13 +432,6 @@ void RunAllTests(Comparator comparator)
 			std::cout << std::setw(18) << SortTime;
 		else
 			std::cout << std::setw(18) << "Incorrect"; 
-		DequeSort = DequeOrigin;
-		DequeCheck = DequeOrigin;
-		RunTest<decltype (TestMerge), decltype (DequeSort.begin())> (TestMerge, DequeSort, DequeCheck, SortTime, CorrectSort);
-		if(CorrectSort)
-			std::cout << std::setw(18) << SortTime;
-		else
-			std::cout << std::setw(18) << "Incorrect";
 		DequeSort = DequeOrigin;
 		DequeCheck = DequeOrigin;
 		RunTest<decltype (TestMergeIter), decltype (DequeSort.begin())> (TestMergeIter, DequeSort, DequeCheck, SortTime, CorrectSort);
