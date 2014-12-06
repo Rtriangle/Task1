@@ -19,7 +19,8 @@
 
 std::random_device rd;
 std::mt19937 gen(rd());
-std::uniform_int_distribution<> dist(1,256);
+std::uniform_int_distribution<> dist(-256,256);
+std::uniform_real_distribution<> dist1(-256,256);
 
 struct X
 {
