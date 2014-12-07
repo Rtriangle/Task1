@@ -24,8 +24,8 @@ void RunTest(SortType OneOfSorts, Container container1, Container container2, do
 	OneOfSorts(container1);
 	auto end = std::chrono::steady_clock::now();
 	SortTime = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() * 0.000001);
-	std::sort(container2.begin(),container2.end(), comparator);
-	CorrectSort = ScanResult(container1.begin(), container1.end(),container2.begin(),container2.end());
+	std::sort(container2.begin(),container2.end(), comparator());  //????????????????????????
+	CorrectSort = ScanResult(container1.begin(), container1.end(),container2.begin(),container2.end(), comparator());
 }
 
 template <typename SortType, typename Iterator, typename Container>
@@ -455,7 +455,7 @@ void RunAllTests(Comparator comparator)
 			std::cout << std::setw(18) << "Incorrect"; 
 	}
 }
-
+/*
 //	Vector X
 //  0,1,2,3 Elements
 	std::cout << "Vector <int>\n\n";
@@ -467,12 +467,12 @@ void RunAllTests(Comparator comparator)
 	std::vector<X> VectorCheck;
 	double SortTime = 0;
 	bool CorrectSort;
-	auto TestInsCpyFor = [](std::vector<X> &v){Insertion_Sort_Copy_For(v.begin(), v.end(), comparator());};
-	auto TestInsCpyBack = [](std::vector<X> &v){Insertion_Sort_Copy_Backward(v.begin(), v.end(), comparator());};
-	auto TestHeap = [](std::vector<X> &v){Heap_Sort(v.begin(), v.end(), comparator());};
-	auto TestMergeIter = [](std::vector<X> &v){Merge_Sort(v.begin(), v.end(), comparator());};
-	auto TestQuick = [](std::vector<X> &v){Quick_Sort(v.begin(), v.end(), comparator());};
-	auto TestSelect = [](std::vector<X> &v){Selection_Sort(v.begin(), v.end(), comparator());};
+	auto TestInsCpyFor = [](std::vector<X> &v){Insertion_Sort_Copy_For(v.begin(), v.end(),  [](const X &left, const X &right)->bool{return left.key < right.key; } );};
+	auto TestInsCpyBack = [](std::vector<X> &v){Insertion_Sort_Copy_Backward(v.begin(), v.end(), [](const X &left, const X &right)->bool{return left.key < right.key; } );};
+	auto TestHeap = [](std::vector<X> &v){Heap_Sort(v.begin(), v.end(), [](const X &left, const X &right)->bool{return left.key < right.key; } );};
+	auto TestMergeIter = [](std::vector<X> &v){Merge_Sort(v.begin(), v.end(), [](const X &left, const X &right)->bool{return left.key < right.key; } );};
+	auto TestQuick = [](std::vector<X> &v){Quick_Sort(v.begin(), v.end(), [](const X &left, const X &right)->bool{return left.key < right.key; } );};
+	auto TestSelect = [](std::vector<X> &v){Selection_Sort(v.begin(), v.end(), [](const X &left, const X &right)->bool{return left.key < right.key; } );};
 	for(long long i = 0; i <= 3; ++i)
 	{
 		std::cout << '\n' << std::setw(10) << i;
@@ -604,7 +604,7 @@ void RunAllTests(Comparator comparator)
 		VectorCheck = VectorOrigin;
 	}
 }
-
+*/
 }
 
 
