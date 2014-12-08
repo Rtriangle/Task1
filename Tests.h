@@ -4,16 +4,6 @@ struct X
 	int value;
 };
 
-/*
-struct comparator
-{
-	bool operator()(const X &a, const X &b) const
-	{
-		return a.key < b.key;
-	}
-};
-*/
-
 std::random_device rd;
 std::mt19937 gen(rd());
 std::uniform_int_distribution<> dist(-1024,1024);
@@ -89,6 +79,7 @@ void RunAllTests()
 		auto start = std::chrono::steady_clock::now();
 		std::sort(VectorCheck.begin(),VectorCheck.end());
 		auto end = std::chrono::steady_clock::now();
+		double StableSortTime = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() * 0.000001);
 		RunTest<decltype (TestInsCpyFor), std::vector<int>> (TestInsCpyFor, VectorSort, VectorCheck, SortTime, CorrectSort);
 		if(CorrectSort)
 			std::cout << std::setw(18) << SortTime;
@@ -124,10 +115,11 @@ void RunAllTests()
 			std::cout << std::setw(18) << SortTime;
 		else
 			std::cout << std::setw(18) << "Incorrect"; 
+		std::cout << std::setw(18) << StableSortTime;
 	}
 //	Vector int
 //	10,100,1000,10000,100000,1000000,10000000
-	for(long long i = 10; i <= 1000; i = i*10)
+	for(long long i = 10; i <= 10000; i = i*10)
 	{
 		std::cout << '\n' << std::setw(10) << i;
 		VectorOrigin.reserve(i);
@@ -140,6 +132,7 @@ void RunAllTests()
 		auto start = std::chrono::steady_clock::now();
 		std::sort(VectorCheck.begin(),VectorCheck.end());
 		auto end = std::chrono::steady_clock::now();
+		double StableSortTime = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() * 0.000001);
 		if(i <= 1000)
 		{
 		RunTest<decltype (TestInsCpyFor), std::vector<int>> (TestInsCpyFor, VectorSort, VectorCheck, SortTime, CorrectSort);
@@ -189,7 +182,8 @@ void RunAllTests()
 		if(CorrectSort)
 			std::cout << std::setw(18) << SortTime;
 		else
-			std::cout << std::setw(18) << "Incorrect"; 
+			std::cout << std::setw(18) << "Incorrect";
+		std::cout << std::setw(18) << StableSortTime;
 	}
 }
 
@@ -223,6 +217,7 @@ void RunAllTests()
 		auto start = std::chrono::steady_clock::now();
 		std::sort(VectorCheck.begin(),VectorCheck.end());
 		auto end = std::chrono::steady_clock::now();
+		double StableSortTime = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() * 0.000001);
 		RunTest<decltype (TestInsCpyFor), std::vector<double>> (TestInsCpyFor, VectorSort, VectorCheck, SortTime, CorrectSort);
 		if(CorrectSort)
 			std::cout << std::setw(18) << SortTime;
@@ -263,11 +258,12 @@ void RunAllTests()
 			std::cout << std::setw(18) << SortTime;
 		else
 			std::cout << std::setw(18) << "Incorrect"; 
+		std::cout << std::setw(18) << StableSortTime;
 	}
 
 //	Vector double
 //	10,100,1000,10000,100000,1000000,10000000
-	for(long long i = 10; i <= 1000; i = i*10)
+	for(long long i = 10; i <= 10000; i = i*10)
 	{
 		std::cout << '\n' << std::setw(10) << i;
 		VectorOrigin.reserve(i);
@@ -280,6 +276,7 @@ void RunAllTests()
 		auto start = std::chrono::steady_clock::now();
 		std::sort(VectorCheck.begin(),VectorCheck.end());
 		auto end = std::chrono::steady_clock::now();
+		double StableSortTime = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() * 0.000001);
 		double SortTime = 0;
 		bool CorrectSort;
 		if(i <= 1000)
@@ -333,6 +330,7 @@ void RunAllTests()
 			std::cout << std::setw(18) << SortTime;
 		else
 			std::cout << std::setw(18) << "Incorrect"; 
+		std::cout << std::setw(18) << StableSortTime;
 	}
 }
 
@@ -363,6 +361,7 @@ void RunAllTests()
 		auto start = std::chrono::steady_clock::now();
 		std::sort(DequeCheck.begin(),DequeCheck.end());
 		auto end = std::chrono::steady_clock::now();
+		double StableSortTime = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() * 0.000001);
 		RunTest<decltype (TestInsCpyFor), std::deque<int>> (TestInsCpyFor, DequeSort, DequeCheck, SortTime, CorrectSort);
 		if(CorrectSort)
 			std::cout << std::setw(18) << SortTime;
@@ -398,11 +397,12 @@ void RunAllTests()
 			std::cout << std::setw(18) << SortTime;
 		else
 			std::cout << std::setw(18) << "Incorrect"; 
+		std::cout << std::setw(18) << StableSortTime;
 	}
 
 //	Deque int
 //	10,100,1000,10000,100000,1000000,10000000
-	for(long long i = 10; i <= 1000; i = i*10)
+	for(long long i = 10; i <= 10000; i = i*10)
 	{
 		std::cout << '\n' << std::setw(10) << i;
 		for(long long j = 0; j <= i; ++j)
@@ -412,6 +412,7 @@ void RunAllTests()
 		auto start = std::chrono::steady_clock::now();
 		std::sort(DequeCheck.begin(),DequeCheck.end());
 		auto end = std::chrono::steady_clock::now();
+		double StableSortTime = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() * 0.000001);
 		double SortTime = 0;
 		bool CorrectSort;
 		if(i <= 1000)
@@ -464,6 +465,7 @@ void RunAllTests()
 			std::cout << std::setw(18) << SortTime;
 		else
 			std::cout << std::setw(18) << "Incorrect"; 
+		std::cout << std::setw(18) << StableSortTime;
 	}
 }
 
@@ -494,6 +496,7 @@ void RunAllTests()
 		auto start = std::chrono::steady_clock::now();
 		std::sort(VectorCheck.begin(),VectorCheck.end(), ComparatorX);
 		auto end = std::chrono::steady_clock::now();
+		double StableSortTime = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() * 0.000001);
 		//!
 		std::string s = "";
 		for(size_t j = 0; j <= i; ++j)
@@ -543,10 +546,11 @@ void RunAllTests()
 			std::cout << std::setw(18) << SortTime;
 		else
 			std::cout << std::setw(18) << "Incorrect"; 
+		std::cout << std::setw(18) << StableSortTime;
 	}
 //	Vector X
 //	10,100,1000,10000,100000,1000000,10000000
-	for(long long i = 10; i <= 1000; i = i*10)
+	for(long long i = 10; i <= 10000; i = i*10)
 	{
 		std::cout << '\n' << std::setw(10) << i;
 		VectorOrigin.reserve(i);
@@ -570,6 +574,7 @@ void RunAllTests()
 		auto start = std::chrono::steady_clock::now();
 		std::sort(VectorCheck.begin(),VectorCheck.end(), ComparatorX);
 		auto end = std::chrono::steady_clock::now();
+		double StableSortTime = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() * 0.000001);
 		if(i <= 1000)
 		{
 		RunTest (TestInsCpyFor, VectorSort, VectorCheck, SortTime, CorrectSort, ComparatorX);
@@ -620,7 +625,7 @@ void RunAllTests()
 			std::cout << std::setw(18) << SortTime;
 		else
 			std::cout << std::setw(18) << "Incorrect"; 
-		VectorSort = VectorOrigin;
+		std::cout << std::setw(18) << StableSortTime;
 	}
 }
 }

@@ -1,11 +1,13 @@
+//Очень странное время работы у Heap Sort
 // Heap Sort
 template <typename Iterator, typename Comparator>
 void Heap_Sort(Iterator Iter_begin, Iterator Iter_end, Comparator comparator)
 {
+	if(Iter_end - Iter_begin == 0) 
+		return;
 	std::make_heap(Iter_begin,Iter_end, comparator);
-	auto Itmoveend = Iter_end;
-	for(int i = 0; i < Iter_end-Iter_begin; i++)
-		std::pop_heap(Iter_begin, Itmoveend--, comparator);
+	for(Iterator i = Iter_end; i != Iter_begin; --i)
+		std::pop_heap(Iter_begin, i, comparator);
 }
 
 template <typename Iterator>

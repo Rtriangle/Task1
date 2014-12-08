@@ -12,31 +12,15 @@
 #include <deque>
 #include <typeinfo>
 #include <algorithm>
-#include "CheckSort.h"
 #include "Sorts.h"
 #include "Tests.h"
 #pragma warning(disable : 4996)
-
-/*
-std::random_device rd;
-std::mt19937 gen(rd());
-std::uniform_int_distribution<> dist(-1024,1024);
-std::uniform_real_distribution<> dist1(-1024.0,1024.0);
-
-struct X
-{
-	std::string key;
-	int value;
-};
-
-struct comparator
-{
-	bool operator()(const X &a, const X &b) const
-	{
-		return a.key < b.key;
-	}
-};
-*/
+#pragma once 
+#ifdef MYCLASS_H
+#define MYCLASS_H
+#include "Sorts.h"
+#include "Tests.h"
+#endif
 
 std::vector <X> VX;
 std::vector <int> V;
@@ -48,4 +32,5 @@ int main()
 	std::ios_base::sync_with_stdio(false);
 	freopen("output.txt","w",stdout);
 	RunAllTests();
+	fclose(stdout);
 }
