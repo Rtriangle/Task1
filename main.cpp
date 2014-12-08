@@ -17,10 +17,11 @@
 #include "Tests.h"
 #pragma warning(disable : 4996)
 
+/*
 std::random_device rd;
 std::mt19937 gen(rd());
-std::uniform_int_distribution<> dist(-256,256);
-std::uniform_real_distribution<> dist1(-256,256);
+std::uniform_int_distribution<> dist(-1024,1024);
+std::uniform_real_distribution<> dist1(-1024.0,1024.0);
 
 struct X
 {
@@ -35,6 +36,7 @@ struct comparator
 		return a.key < b.key;
 	}
 };
+*/
 
 std::vector <X> VX;
 std::vector <int> V;
@@ -45,6 +47,5 @@ int main()
 {
 	std::ios_base::sync_with_stdio(false);
 	freopen("output.txt","w",stdout);
-	RunAllTests(comparator());
-//	std::getchar();
+	RunAllTests();
 }
