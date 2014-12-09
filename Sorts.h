@@ -163,9 +163,11 @@ void Merge_Sort(Iterator begin, Iterator end)
 
 //Quick Sort
 template <typename Iterator, typename Comparator>
-void Quick_Sort(Iterator Iter_begin, Iterator Iter_end, Comparator comparator)
+void Quick_Sort(Iterator Iter_begin, Iterator Iter_end, const Comparator &comparator)
 {
-	if((Iter_begin - Iter_end) < 25)
+	if(Iter_end-Iter_begin <= 1)
+		return;
+	if((Iter_end - Iter_begin) < 25)
 		Insertion_Sort_Copy_Backward(Iter_begin, Iter_end, comparator);
 	else
 	{

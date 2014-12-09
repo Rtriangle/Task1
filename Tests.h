@@ -53,7 +53,7 @@ void RunAllTests()
 //  0,1,2,3 Elements
 	std::cout << "Vector <int>\n\n";
 	std::cout << std::setw(10) << "n" << std::setw(18) << "InsertionFor" << std::setw(18) << "InsertionCopy" << std::setw(18) << "Selection" 
-			  << std::setw(18) << "MergeIteration" << std::setw(18) << "Quick" << std::setw(18) << "Heap" << std::setw(18) << "stable_sort";
+			  << std::setw(18) << "Heap" << std::setw(18) << "MergeIteration" << std::setw(18) << "Quick" << std::setw(18) << "stable_sort";
 {
 	std::vector<int> VectorOrigin; 
 	std::vector<int> VectorSort;
@@ -69,6 +69,7 @@ void RunAllTests()
 	for(long long i = 0; i <= 3; ++i)
 	{
 		std::cout << '\n' << std::setw(10) << i;
+		VectorOrigin.clear();
 		VectorOrigin.reserve(i);
 		VectorSort.reserve(i);
 		VectorCheck.reserve(i);
@@ -98,6 +99,7 @@ void RunAllTests()
 		else
 			std::cout << std::setw(18) << "Incorrect"; 
 		VectorSort = VectorOrigin;
+		
 		RunTest<decltype (TestHeap), std::vector<int>> (TestHeap, VectorSort, VectorCheck, SortTime, CorrectSort);
 		if(CorrectSort)
 			std::cout << std::setw(18) << SortTime;
@@ -122,6 +124,7 @@ void RunAllTests()
 	for(long long i = 10; i <= 10000; i = i*10)
 	{
 		std::cout << '\n' << std::setw(10) << i;
+		VectorOrigin.clear();
 		VectorOrigin.reserve(i);
 		VectorSort.reserve(i);
 		VectorCheck.reserve(i);
@@ -171,6 +174,7 @@ void RunAllTests()
 			std::cout << std::setw(18) << SortTime;
 		else
 			std::cout << std::setw(18) << "Incorrect"; 
+		
 		VectorSort = VectorOrigin;
 		RunTest<decltype (TestMergeIter), std::vector<int>> (TestMergeIter, VectorSort, VectorCheck, SortTime, CorrectSort);
 		if(CorrectSort)
@@ -178,12 +182,14 @@ void RunAllTests()
 		else
 			std::cout << std::setw(18) << "Incorrect"; 
 		VectorSort = VectorOrigin;
+		
 		RunTest<decltype (TestQuick), std::vector<int>> (TestQuick, VectorSort, VectorCheck, SortTime, CorrectSort);
 		if(CorrectSort)
 			std::cout << std::setw(18) << SortTime;
 		else
 			std::cout << std::setw(18) << "Incorrect";
 		std::cout << std::setw(18) << StableSortTime;
+		
 	}
 }
 
@@ -191,7 +197,7 @@ void RunAllTests()
 //  0,1,2,3 Elements
 	std::cout << "\n\nVector <double>\n\n";
 	std::cout << std::setw(10) << "n" << std::setw(18) << "InsertionFor" << std::setw(18) << "InsertionCopy" << std::setw(18) << "Selection" 
-			  << std::setw(18) << "MergeIteration" << std::setw(18) << "Quick" << std::setw(18) << "Heap" << std::setw(18) << "stable_sort";
+			  << std::setw(18) << "Heap" << std::setw(18) << "MergeIteration" << std::setw(18) << "Quick" << std::setw(18) << "stable_sort";
 {
 	std::vector<double> VectorOrigin; 
 	std::vector<double> VectorSort;
@@ -207,6 +213,7 @@ void RunAllTests()
 	for(long long i = 0; i <= 3; ++i)
 	{
 		std::cout << '\n' << std::setw(10) << i;
+		VectorOrigin.clear();
 		VectorOrigin.reserve(i);
 		VectorSort.reserve(i);
 		VectorCheck.reserve(i);
@@ -266,6 +273,7 @@ void RunAllTests()
 	for(long long i = 10; i <= 10000; i = i*10)
 	{
 		std::cout << '\n' << std::setw(10) << i;
+		VectorOrigin.clear();
 		VectorOrigin.reserve(i);
 		VectorSort.reserve(i);
 		VectorCheck.reserve(i);
@@ -338,7 +346,7 @@ void RunAllTests()
 //  0,1,2,3 Elements
 	std::cout << "\n\nDeque <int>\n\n";
 	std::cout << std::setw(10) << "n" << std::setw(18) << "InsertionFor" << std::setw(18) << "InsertionCopy" << std::setw(18) << "Selection" 
-			  << std::setw(18) << "MergeIteration" << std::setw(18) << "Quick" << std::setw(18) << "Heap" << std::setw(18) << "stable_sort";
+			  << std::setw(18) << "Heap" << std::setw(18) << "MergeIteration" << std::setw(18) << "Quick" << std::setw(18) << "stable_sort";
 {
 	std::deque<int> DequeOrigin; 
 	std::deque<int> DequeSort;
@@ -353,6 +361,7 @@ void RunAllTests()
 	auto TestSelect = [](std::deque<int> &v){Selection_Sort(v.begin(), v.end());};
 	for(long long i = 0; i <= 3; ++i)
 	{
+		DequeOrigin.clear();
 		std::cout << '\n' << std::setw(10) << i;
 		for(long long j = 0; j <= i; ++j)
 			DequeOrigin.push_back(dist1(gen));
@@ -404,6 +413,7 @@ void RunAllTests()
 //	10,100,1000,10000,100000,1000000,10000000
 	for(long long i = 10; i <= 10000; i = i*10)
 	{
+		DequeOrigin.clear();
 		std::cout << '\n' << std::setw(10) << i;
 		for(long long j = 0; j <= i; ++j)
 			DequeOrigin.push_back(dist(gen));
@@ -473,7 +483,7 @@ void RunAllTests()
 //  0,1,2,3 Elements
 	std::cout << "\n\nVector <X>\n\n";
 	std::cout << std::setw(10) << "n" << std::setw(18) << "InsertionFor" << std::setw(18) << "InsertionCopy" << std::setw(18) << "Selection" 
-			  << std::setw(18) << "MergeIteration" << std::setw(18) << "Quick" << std::setw(18) << "Heap" << std::setw(18) << "stable_sort";
+			  << std::setw(18) << "Heap" << std::setw(18) << "MergeIteration" << std::setw(18) << "Quick" << std::setw(18) << "stable_sort";
 {
 	std::vector<X> VectorOrigin; 
 	std::vector<X> VectorSort;
