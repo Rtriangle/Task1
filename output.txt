@@ -1,0 +1,47 @@
+Vector <int>
+
+         n      InsertionFor     InsertionCopy         Selection              Heap    MergeIteration             Quick       stable_sort
+         0                 0                 0                 0                 0                 0                 0                 0
+         1                 0                 0                 0                 0                 0                 0                 0
+         2                 0                 0                 0                 0                 0                 0                 0
+         3                 0                 0                 0                 0                 0                 0                 0
+        10                 0                 0                 0                 0                 0                 0                 0
+       100          0.001001             0.001                 0                 0          0.000998                 0                 0
+      1000          0.125082           0.06104          0.043028             0.001          0.002001          0.002001                 0
+     10000                 -                 -                 -          0.042028          0.024015           0.01601                 0
+
+Vector <double>
+
+         n      InsertionFor     InsertionCopy         Selection              Heap    MergeIteration             Quick       stable_sort
+         0                 0                 0                 0                 0                 0                 0                 0
+         1                 0                 0                 0                 0                 0                 0                 0
+         2                 0                 0                 0                 0                 0                 0                 0
+         3                 0                 0                 0                 0                 0                 0                 0
+        10                 0                 0                 0                 0                 0                 0                 0
+       100             0.001                 0                 0                 0             0.001                 0                 0
+      1000          0.127084          0.057038          0.039026             0.001          0.003001          0.002001                 0
+     10000                 -                 -                 -          0.043028          0.025016          0.039025             0.001
+
+Deque <int>
+
+         n      InsertionFor     InsertionCopy         Selection              Heap    MergeIteration             Quick       stable_sort
+         0                 0                 0                 0                 0                 0                 0                 0
+         1                 0                 0                 0                 0                 0                 0                 0
+         2                 0                 0                 0                 0                 0                 0                 0
+         3                 0                 0                 0                 0                 0                 0                 0
+        10                 0                 0                 0                 0                 0                 0                 0
+       100             0.001                 0                 0                 0                 0             0.001                 0
+      1000          0.115076          0.055037          0.040026          0.002001          0.002001          0.002001                 0
+     10000                 -                 -                 -          0.175117          0.024016           0.01601                 0
+
+Vector <X>
+
+         n      InsertionFor     InsertionCopy         Selection              Heap    MergeIteration             Quick       stable_sort
+         0                 0                 0                 0                 0                 0                 0                 0
+         1                 0                 0                 0                 0                 0                 0                 0
+         2                 0                 0                 0                 0                 0                 0                 0
+         3             0.001                 0                 0                 0                 0                 0                 0
+        10                 0                 0                 0                 0                 0                 0                 0
+       100          0.009005             0.001             0.001                 0                 0          0.002001                 0
+      1000          0.726484          0.077051          0.058038          0.011007          0.014009          0.161108          0.004002
+     10000                 -                 -                 -          0.626418          0.481321          0.083055          0.027017
