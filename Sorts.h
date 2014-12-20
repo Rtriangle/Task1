@@ -97,8 +97,7 @@ void Insertion_Sort_Copy_For(Iterator Iter_begin, Iterator Iter_end)
 }
 
 //Merge Sort Iteration
-template <typename FSourceIterator, typename SSourceIterator,
-typename TargetIterator, typename Comparator>
+template <typename FSourceIterator, typename SSourceIterator, typename TargetIterator, typename Comparator>
  
 TargetIterator MergeI(FSourceIterator first_begin, FSourceIterator first_end,
                      SSourceIterator second_begin, SSourceIterator second_end,
@@ -106,7 +105,7 @@ TargetIterator MergeI(FSourceIterator first_begin, FSourceIterator first_end,
 {
     while (first_begin != first_end && second_begin != second_end) 
 	{
-        if(comparator(*first_begin, *second_begin)) 
+        if(comparator(*first_begin, *second_begin) || !(comparator(*first_begin, *second_begin) || comparator(*second_begin, *first_begin))) 
 		{
             *target = *first_begin;
             ++target;
@@ -143,7 +142,7 @@ template <typename Iterator, typename Comparator>
 void Merge_Sort(Iterator begin, Iterator end, Comparator comparator) 
 {
     std::vector<typename std::iterator_traits<Iterator>::value_type> buffer(end - begin);
-    ptrdiff_t chunk_size = 1;
+	std::ptrdiff_t chunk_size = 1;
     while (chunk_size < end - begin) 
 	{
         MergeSubarraysI(begin, end, buffer.begin(), chunk_size, comparator);
@@ -163,7 +162,6 @@ void Merge_Sort(Iterator begin, Iterator end)
 	Merge_Sort(begin, end, cmp);
 }
 
-
 //Quick Sort
 template <typename Iterator, typename Comparator>
 void Quick_Sort(Iterator Iter_begin, Iterator Iter_end, const Comparator &comparator)
@@ -174,8 +172,10 @@ void Quick_Sort(Iterator Iter_begin, Iterator Iter_end, const Comparator &compar
 		Insertion_Sort_Copy_Backward(Iter_begin, Iter_end, comparator);
 	else
 	{
+		std::random_device rd;
+		std::mt19937 gen(rd());
 		std::uniform_int_distribution<> dist(0, size_t(Iter_end - Iter_begin) - 1);
-		long long Move = dist(gen);
+		std::ptrdiff_t Move = dist(gen);
 		typename std::iterator_traits<Iterator>::value_type PartElement = *(Iter_begin + Move);
 		Iterator Left = Iter_begin;
 		Iterator Right = Iter_end-1;
@@ -206,26 +206,19 @@ void Quick_Sort(Iterator Iter_begin, Iterator Iter_end)
 	Quick_Sort(Iter_begin, Iter_end, cmp);
 }
 
-
 //Selection Sort
 template<typename Iterator, typename Comparator>
 void Selection_Sort(Iterator Iter_begin, Iterator Iter_end, Comparator comparator)
 {
-	Iterator it = Iter_begin;
-	Iterator it_move = it;
-	Iterator it_min = it;
-	for(int i = 1; i < (Iter_end-Iter_begin); ++i)
+	for(auto it = Iter_begin; it < Iter_end; ++it)
 	{
-		it_move = it;
-		it_min = it;
-		while(it_move != Iter_end)
+		Iterator it_min = it;
+		for(auto it_move = it+1; it_move != Iter_end; ++it_move)
 		{
 			if(comparator(*it_move,*it_min))
 				it_min = it_move;
-			it_move++;
 		}
 		iter_swap(it,it_min);
-		++it;
 	}
 }
 

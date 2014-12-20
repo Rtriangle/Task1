@@ -1,3 +1,19 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <iomanip>
+#include <cstring>
+#include <cstdlib>
+#include <random>
+#include <iterator>
+#include <array>
+#include <chrono>
+#include <ctime>
+#include <deque>
+#include <typeinfo>
+#include <algorithm>
+#pragma once
+
 struct X
 {
 	std::string key;
@@ -6,7 +22,7 @@ struct X
 
 std::random_device rd;
 std::mt19937 gen(rd());
-std::uniform_int_distribution<> dist(-1024,1024);
+std::uniform_int_distribution<> dist(-5,5);
 std::uniform_real_distribution<> dist1(-1024.0,1024.0);
 
 template <typename Iterator, typename Comparator> 
@@ -29,19 +45,18 @@ bool ScanResult(Iterator Left1, Iterator Right1, Iterator Left2, Iterator Right2
 }
 
 template <typename SortType, typename Container, typename Comparator> 
-void RunTest(SortType OneOfSorts, Container &container1, Container &container2, double &SortTime, bool &CorrectSort, Comparator comparator)
+void RunTest(SortType OneOfSorts, Container &ContainerForMySort, Container &ContainerForStdSort, double &SortTime, bool &CorrectSort, Comparator comparator)
 {
 	auto start = std::chrono::steady_clock::now();
-	OneOfSorts(container1);
+	OneOfSorts(ContainerForMySort);
 	auto end = std::chrono::steady_clock::now();
 	SortTime = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() * 0.000001);
-	CorrectSort = ScanResult(container1.begin(), container1.end(),container2.begin(),container2.end(), comparator);
+	CorrectSort = ScanResult(ContainerForMySort.begin(), ContainerForMySort.end(), ContainerForStdSort.begin(), ContainerForStdSort.end(), comparator);
 }
 
 template <typename SortType, typename Container>
 void RunTest(SortType OneOfSorts, Container &container1, Container &container2, double &SortTime, bool &CorrectSort)
 {
-//	std::less<typename std::iterator_traits<Iterator>::value_type> cmp;
 	std::less<typename Container::value_type> cmp;
 	RunTest(OneOfSorts, container1, container2, SortTime, CorrectSort, cmp);
 }
@@ -66,7 +81,7 @@ void RunAllTests()
 	auto TestMergeIter = [](std::vector<int> &v){Merge_Sort(v.begin(), v.end());};
 	auto TestQuick = [](std::vector<int> &v){Quick_Sort(v.begin(), v.end());};
 	auto TestSelect = [](std::vector<int> &v){Selection_Sort(v.begin(), v.end());};
-	for(long long i = 0; i <= 3; ++i)
+	for(size_t i = 0; i <= 3; ++i)
 	{
 		std::cout << '\n' << std::setw(10) << i;
 		VectorOrigin.clear();
@@ -121,7 +136,7 @@ void RunAllTests()
 	}
 //	Vector int
 //	10,100,1000,10000,100000,1000000,10000000
-	for(long long i = 10; i <= 10000; i = i*10)
+	for(size_t i = 10; i <= 10000; i = i*10)
 	{
 		std::cout << '\n' << std::setw(10) << i;
 		VectorOrigin.clear();
