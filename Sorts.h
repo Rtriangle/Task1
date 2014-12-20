@@ -1,5 +1,19 @@
-//Очень странное время работы у Heap Sort
-// Heap Sort
+#include <iostream>
+#include <vector>
+#include <string>
+#include <iomanip>
+#include <cstring>
+#include <cstdlib>
+#include <random>
+#include <iterator>
+#include <array>
+#include <chrono>
+#include <ctime>
+#include <deque>
+#include <typeinfo>
+#include <algorithm>
+#pragma once
+
 template <typename Iterator, typename Comparator>
 void Heap_Sort(Iterator Iter_begin, Iterator Iter_end, Comparator comparator)
 {
@@ -21,30 +35,24 @@ void Heap_Sort(Iterator Iter_begin, Iterator Iter_end)
 template <typename Iterator, typename Comparator>
 void Insertion_Sort_Copy_Backward(Iterator Iter_begin, Iterator Iter_end, Comparator comparator)
 {
-	Iterator Iter_move;
-	if(Iter_begin != Iter_end)
-		Iter_move = Iter_begin + 1;
-	Iterator Iter_value;
-	bool Doit = true;
-	auto Tmp = *(Iter_begin);
-	while(Iter_move != Iter_end)
+	if(Iter_begin == Iter_end)
+		return;
+	for(auto Iter_move = Iter_begin+1; Iter_move != Iter_end; ++Iter_move)
 	{
-		Iter_value = Iter_move;
-		Doit = true;
-		while(Iter_value > Iter_begin && Doit)
+		Iterator Iter_value = Iter_move;
+		while(Iter_value > Iter_begin)
 		{
 			if(!comparator(*Iter_move,*(Iter_value-1)))
-				Doit = false;
+				break; // Changed last
 			else
-				Iter_value--;
+				--Iter_value;
 		}
-		Tmp = *(Iter_move);
 		if(Iter_value != Iter_move)
 		{
+			auto Tmp = *(Iter_move);
 			std::copy_backward(Iter_value, Iter_move, Iter_move+1);
 			*(Iter_value) = Tmp;
 		}
-		Iter_move++;
 	}
 }
 
@@ -59,32 +67,25 @@ void Insertion_Sort_Copy_Backward(Iterator Iter_begin, Iterator Iter_end)
 template <typename Iterator, typename Comparator>
 void Insertion_Sort_Copy_For(Iterator Iter_begin, Iterator Iter_end, Comparator comparator)
 {
-	Iterator Iter_move;
-	if(Iter_begin != Iter_end)
-		Iter_move = Iter_begin + 1;
-	Iterator Iter_value;
-	Iterator Iter_fix;
-	bool Doit = true;
-	auto Tmp = *(Iter_begin);
-	while(Iter_move != Iter_end)
+	if(Iter_begin == Iter_end)
+		return;
+	for(auto Iter_move = Iter_begin+1; Iter_move != Iter_end; ++Iter_move)
 	{
-		Iter_value = Iter_move;
-		Doit = true;
-		while(Iter_value > Iter_begin && Doit)
+		Iterator Iter_value = Iter_move;
+		while(Iter_value > Iter_begin)
 		{
 			if(!comparator(*Iter_move, *(Iter_value-1)))
-				Doit = false;
+				break;
 			else
-				Iter_value--;
+				--Iter_value;
 		}
-		Tmp = *(Iter_move);
 		if(Iter_value != Iter_move)
 		{
-			for(Iterator ittmp = Iter_move; ittmp > Iter_value; ittmp--)
+			auto Tmp = *(Iter_move);
+			for(Iterator ittmp = Iter_move; ittmp > Iter_value; --ittmp)
 				std::iter_swap(ittmp,(ittmp-1));
 			*(Iter_value) = Tmp;
 		}
-		Iter_move++;
 	}
 }
 
@@ -103,14 +104,16 @@ TargetIterator MergeI(FSourceIterator first_begin, FSourceIterator first_end,
                      SSourceIterator second_begin, SSourceIterator second_end,
                      TargetIterator target, Comparator comparator) 
 {
-    while (first_begin != first_end &&
-           second_begin != second_end) {
-        if(comparator(*first_begin, *second_begin)) {
+    while (first_begin != first_end && second_begin != second_end) 
+	{
+        if(comparator(*first_begin, *second_begin)) 
+		{
             *target = *first_begin;
             ++target;
             ++first_begin;
         }
-        else {
+        else 
+		{
             *target = *second_begin;
             ++target;
             ++second_begin;
@@ -179,14 +182,14 @@ void Quick_Sort(Iterator Iter_begin, Iterator Iter_end, const Comparator &compar
 		while(Left < Right)
 		{
 			while(comparator(*Left, PartElement))
-				Left++;
+				++Left;
 			while(comparator(PartElement, *Right))
-				Right--;
+				--Right;
 			if(Left <= Right)
 			{
 				std::iter_swap(Left,Right);
-				Left++;
-				Right--;
+				++Left;
+				--Right;
 			}
 		}
 		if(Left < Iter_end-1)
@@ -211,7 +214,7 @@ void Selection_Sort(Iterator Iter_begin, Iterator Iter_end, Comparator comparato
 	Iterator it = Iter_begin;
 	Iterator it_move = it;
 	Iterator it_min = it;
-	for(int i = 1; i < (Iter_end-Iter_begin); i++)
+	for(int i = 1; i < (Iter_end-Iter_begin); ++i)
 	{
 		it_move = it;
 		it_min = it;
@@ -222,7 +225,7 @@ void Selection_Sort(Iterator Iter_begin, Iterator Iter_end, Comparator comparato
 			it_move++;
 		}
 		iter_swap(it,it_min);
-		it++;
+		++it;
 	}
 }
 
