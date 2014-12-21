@@ -1,5 +1,3 @@
-#include "Sorts.h"
-#include "Tests.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -14,6 +12,8 @@
 #include <deque>
 #include <typeinfo>
 #include <algorithm>
+#include "Sorts.h"
+#include "Tests.h"
 #pragma warning(disable : 4996)
 
 int main()
